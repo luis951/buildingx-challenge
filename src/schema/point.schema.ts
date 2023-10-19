@@ -15,7 +15,7 @@ export class Point {
     @Prop({required: true})
     value: number;
 
-    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Equipment'})
+    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Equipment', required: true})
     equipment: Equipment;
 }
 

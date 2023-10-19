@@ -1,11 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePointDto } from './dto/create-point.dto';
 import { UpdatePointDto } from './dto/update-point.dto';
+import { Point } from 'src/schema/point.schema';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class PointService {
+  constructor(@InjectModel(Point.name) private pointModel: Model<Point>) {}
   create(createPointDto: CreatePointDto) {
-    return 'This action adds a new point';
+    const point = new this.pointModel(createPointDto);
+    return point.save();
   }
 
   findAll() {
