@@ -5,7 +5,7 @@ import { UpdatePointDto } from './dto/update-point.dto';
 
 @Controller('point')
 export class PointController {
-  constructor(private readonly pointService: PointService) {}
+  constructor(private readonly pointService: PointService) { }
 
   @Post()
   create(@Body() createPointDto: CreatePointDto) {
@@ -17,18 +17,24 @@ export class PointController {
     return this.pointService.findAll();
   }
 
+  @Get('byEquipment/:equipment')
+  findByEquipmentId(@Param('equipment') id: string) {
+    console.log(id)
+    return this.pointService.findByEquipmentId(id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.pointService.findOne(+id);
+    return this.pointService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePointDto: UpdatePointDto) {
-    return this.pointService.update(+id, updatePointDto);
+    return this.pointService.update(id, updatePointDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.pointService.remove(+id);
+    return this.pointService.remove(id);
   }
 }
