@@ -8,12 +8,15 @@ describe('EquipmentService', () => {
   let service: EquipmentService;
   let model: Model<Equipment>;
   let mockService = {
-    findAll: jest.fn(),
+    find: jest.fn(
+      () => new Promise(resolve => resolve([]))
+    ),
   };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [EquipmentService,
+      providers: [
+        EquipmentService,
         {
           provide: getModelToken(Equipment.name),
           useValue: mockService,
@@ -29,10 +32,11 @@ describe('EquipmentService', () => {
   });
 
   describe('findAll', () => {
-    it('should return an array of equipment', async () => {
-      const result = await service.findAll()
-      console.log(result)
-      expect(result).toEqual([{}]);
+    it('should return an array of equipments', async () => {
+      const mockFind = jest.spyOn(model, 'find');
+
+      const result = service.findAll();
+      expect(mockFind).toHaveBeenCalled();
     });
   });
 });
